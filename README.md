@@ -4,7 +4,9 @@ A stack gathers the collected path values in an upwards organization whereas a q
 
 In a stack configuration, a new best found path can be "grown" from the most recently explored path.
 
-In a queue configuration, the new paths are added at the end of the organization.
+In a queue configuration, the new paths are added at the end of the organization, or to the rear.
+
+# I scribbled some of my thought process with the attached thoughtProcess.png
 
 # II
 The total number of search states, which are the discovered valid paths, can be affected by the organization. A queue may continuously add newly found paths whereas I can imagine a stack would add the best found path to the stack and remove the previously longer stack quicker.
@@ -12,13 +14,14 @@ The total number of search states, which are the discovered valid paths, can be 
 # III
 I do not believe using either a stack or queue organization will find a path quicker, since this determines on the logic used the in the search algorithm.
 
-The stack or queue is a method to gather found search states, paths.
+The stack or queue is a method to gather found search states, or paths.
 
 # IV
-The scenario where the best case solution is where the branching nodes is all left or all down such as:
+The scenario where the best case solution is where the branching nodes is all to the right or all down such as:
 1 O O O O 2
 
-or 
+or
+
 1
 O
 O

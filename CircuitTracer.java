@@ -24,8 +24,7 @@ public class CircuitTracer {
 
 	/** Print instructions for running CircuitTracer from the command line. */
 	private void printUsage() {
-		//TODO: print out clear usage instructions when there are problems with
-		// any command line args
+		System.out.println("Usage: java CircuitTracer -s|-q -c|-g filename");
 	}
 	
 	/** 
@@ -65,23 +64,21 @@ public class CircuitTracer {
 		}
 
 		//TODO: read in the CircuitBoard from the given file
-		try {
-			CircuitBoard board = new CircuitBoard(args[2]);
-		} catch (FileNotFoundException e) {
-			System.out.println("Circuit Board file was not found");
-		}
-		catch (InvalidFileFormatException e) {
-			System.out.println("Invalid file format. Please re-check the file extension.");
-		}
+		// try {
+		// 	CircuitBoard board = new CircuitBoard(args[2]);
+		// } catch (FileNotFoundException e) {
+		// 	System.out.println("Circuit Board file was not found");
+		// }
+		// catch (InvalidFileFormatException e) {
+		// 	System.out.println("Invalid file format. Please re-check the file extension.");
+		// }
 
 		//TODO: run the search for best paths
 		ArrayList<TraceState> paths = new ArrayList<TraceState>();
 
-		while(!stateStore.isEmpty()) {
-			TraceState currentState = stateStore.next();
-
-			
-		}
+		// while(!stateStore.isEmpty()) {
+		// 	TraceState currentState = stateStore.next();
+		// }
 
 		//TODO: output results to console or GUI, according to specified choice
 		switch (args[1]) {
