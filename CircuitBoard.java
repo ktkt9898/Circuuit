@@ -95,38 +95,45 @@ public class CircuitBoard {
 							} else if (line.charAt(j) == '2') {
 								twoCount++;
 							}
-							// Retrieve the value at the column, "i" is incremented
-							// And populate the board with the values
-							board[i][j] = line.charAt(j);
+							if (ALLOWED_CHARS.indexOf(line.charAt(j)) == -1
+									|| ALLOWED_CHARS.indexOf(line.charAt(i)) == -1) {
+								lineScan.close();
+								fileScan.close();
+								throw new InvalidFileFormatException(filename + "contains invalid characters.");
+							} else {
+								// Retrieve the value at the column, "i" is incremented
+								// And populate the board with the values
+								board[i][j] = line.charAt(j);
+							}
+							colCount++;
 						}
-						colCount++;
+						rowCount++;
 					}
-					rowCount++;
+					// If more than one start point or end point, throw an exception
+					if (oneCount > 1 || twoCount > 1) {
+						lineScan.close();
+						fileScan.close();
+						throw new InvalidFileFormatException(filename + "exceeds more than one start or end point.");
+					}
+					// If no start or end point, throw an exception
+					if (oneCount == 0 || twoCount == 0) {
+						lineScan.close();
+						fileScan.close();
+						throw new InvalidFileFormatException(filename + "does not contain a start or end point");
+					}
 				}
-				// If more than one start point or end point, throw an exception
-				if (oneCount > 1 || twoCount > 1) {
+				// Check if an invalid number of rows were retrieved
+				if (rowCount != ROWS) {
 					lineScan.close();
 					fileScan.close();
-					throw new InvalidFileFormatException(filename + "exceeds more than one start or end point.");
+					throw new InvalidFileFormatException(filename + "rows does not equal rows in first line.");
 				}
-				// If no start or end point, throw an exception
-				if (oneCount == 0 || twoCount == 0) {
+				// Check if an invalid number of columns were retrieved
+				if (colCount != COLS) {
 					lineScan.close();
 					fileScan.close();
-					throw new InvalidFileFormatException(filename + "does not contain a start or end point");
+					throw new InvalidFileFormatException(filename + "columns does not equal columns in first line.");
 				}
-			}
-			// Check if an invalid number of rows were retrieved
-			if (rowCount != ROWS) {
-				lineScan.close();
-				fileScan.close();
-				throw new InvalidFileFormatException(filename + "rows does not equal rows in first line.");
-			}
-			// Check if an invalid number of columns were retrieved
-			if (colCount != COLS) {
-				lineScan.close();
-				fileScan.close();
-				throw new InvalidFileFormatException(filename + "columns does not equal columns in first line.");
 			}
 		}
 	}
