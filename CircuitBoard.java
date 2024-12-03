@@ -78,13 +78,14 @@ public class CircuitBoard {
 
 		int oneCount = 0;
 		int twoCount = 0;
-		
+
 		// i rows
 		for (int i = 0; i < ROWS; i++) {
-			if (!fileScan.hasNextLine()) {
+			if (!fileScan.hasNext()) {
 				firstLineScan.close();
 				fileScan.close();
-				throw new InvalidFileFormatException(String.format("%s: row %d does not contain %d rows.", filename, i, ROWS));
+				throw new InvalidFileFormatException(
+						String.format("%s: row %d does not contain %d rows.", filename, i, ROWS));
 			}
 			String line = fileScan.nextLine();
 			Scanner lineScanner = new Scanner(line);
@@ -94,13 +95,17 @@ public class CircuitBoard {
 				if (!lineScanner.hasNext()) {
 					lineScanner.close();
 					fileScan.close();
-					throw new InvalidFileFormatException(String.format("%s: row %d does not contain %d columns.", filename, i, COLS));
+					throw new InvalidFileFormatException(
+							String.format("%s: row %d does not contain %d columns.", filename, i, COLS));
 				}
-				String columnValue = lineScanner.next(); {
+
+				String columnValue = lineScanner.next();
+				{
 					if (columnValue.length() != 1) {
 						lineScanner.close();
 						fileScan.close();
-						throw new InvalidFileFormatException(String.format("%s: row %d column %d contains more than one character.", filename, i, k));
+						throw new InvalidFileFormatException(String
+								.format("%s: row %d column %d contains more than one character.", filename, i, k));
 					}
 
 					char colVal = columnValue.charAt(0);
@@ -114,6 +119,7 @@ public class CircuitBoard {
 						fileScan.close();
 						lineScanner.close();
 						throw new InvalidFileFormatException(filename + "contains invalid characters.");
+
 					} else {
 						// Retrieve the value at the column
 						// And populate the board with the values
@@ -121,6 +127,12 @@ public class CircuitBoard {
 						board[i][k] = colVal;
 					}
 				}
+			}
+			if (lineScanner.hasNext()) {
+				lineScanner.close();
+				fileScan.close();
+				throw new InvalidFileFormatException(
+						String.format("%s: row %d contains more than %d columns.", filename, i, COLS));
 			}
 			// Close the inner for loop scanner
 			lineScanner.close();
@@ -135,6 +147,11 @@ public class CircuitBoard {
 			fileScan.close();
 			throw new InvalidFileFormatException(filename + "does not contain a start or end point");
 		}
+		if (fileScan.hasNext()) {
+			fileScan.close();
+			throw new InvalidFileFormatException(filename + "contains more than " + ROWS + " rows.");
+		}
+		fileScan.close();
 	}
 
 	/**
