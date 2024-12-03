@@ -49,6 +49,8 @@ public class CircuitBoard {
 		// throw InvalidFileFormatException if any issues are encountered while parsing
 		// the file
 		Scanner fileScan = new Scanner(new File(filename));
+
+		// The very first next line, which is the first line of the file.
 		String firstLine = fileScan.nextLine();
 		Scanner firstLineScan = new Scanner(firstLine);
 
@@ -87,6 +89,8 @@ public class CircuitBoard {
 				throw new InvalidFileFormatException(
 						String.format("%s: row %d does not contain %d rows.", filename, i, ROWS));
 			}
+
+			// This next line is the actual contents of the file
 			String line = fileScan.nextLine();
 			Scanner lineScanner = new Scanner(line);
 			// Advance to the next line
