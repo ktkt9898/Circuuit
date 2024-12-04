@@ -113,9 +113,21 @@ public class CircuitBoard {
 					}
 
 					char colVal = columnValue.charAt(0);
-					if (colVal == '1') {
+					if (colVal == START) {
+						if (startingPoint != null) {
+							fileScan.close();
+							lineScanner.close();
+							throw new InvalidFileFormatException(filename + "contains more than one start point.");
+						}
+						startingPoint = new Point(i, k);
 						oneCount++;
-					} else if (colVal == '2') {
+					} else if (colVal == END) {
+						if (endingPoint != null) {
+							fileScan.close();
+							lineScanner.close();
+							throw new InvalidFileFormatException(filename + "contains more than one end point.");
+						}
+						endingPoint = new Point(i, k);
 						twoCount++;
 					}
 
@@ -140,11 +152,6 @@ public class CircuitBoard {
 			}
 			// Close the inner for loop scanner
 			lineScanner.close();
-		}
-		// If more than one start point or end point, throw an exception
-		if (oneCount > 1 || twoCount > 1) {
-			fileScan.close();
-			throw new InvalidFileFormatException(filename + "exceeds more than one start or end point.");
 		}
 		// If no start or end point, throw an exception
 		if (oneCount == 0 || twoCount == 0) {

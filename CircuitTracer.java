@@ -43,19 +43,19 @@ public class CircuitTracer {
 			printUsage();
 			return; // exit the constructor immediately
 		}
-		if (!args[0].equals("-s") || !args[0].equals("-q")) {
+		if (!args[0].equals("-s") && !args[0].equals("-q")) {
 			printUsage();
 			return;
 		}
 
-		if (!args[1].equals("-c") || !args[1].equals("-g")) {
+		if (!args[1].equals("-c") && !args[1].equals("-g")) {
 			printUsage();
 			return;
 		}
 
 		// TODO: initialize the Storage to use either a stack or queue
 		// Intialize an empty Storage object that stores objects of type TraceState
-		Storage<TraceState> stateStore;
+		Storage<TraceState> stateStore = null;
 
 		switch (args[0]) {
 			case "-s":
@@ -73,7 +73,10 @@ public class CircuitTracer {
 		try {
 			board = new CircuitBoard(args[2]);
 		} catch (FileNotFoundException e) {
-			System.out.println("File was not found.");
+			System.out.println(e + "File was not found.");
+			return;
+		} catch (InvalidFileFormatException e) {
+			System.out.println(e + "File is not in the correct format.");
 			return;
 		}
 
@@ -81,13 +84,13 @@ public class CircuitTracer {
 		// Initalize an empty list that stores objects of type TraceState
 		ArrayList<TraceState> bestPaths = new ArrayList<TraceState>();
 
-		// Add a new initial TraceState object (a path with one trace) 
+		// Add a new initial TraceState object (a path with one trace)
 		// to stateStore for each open position adjacent to the starting component
 		int x = board.getStartingPoint().x;
 		int y = board.getStartingPoint().y;
 
-		TraceState initialState = new TraceState(board, x, y);
-		stateStore.store(initialState);
+		// TraceState initialState = new TraceState(board, x, y);
+		// stateStore.store(initialState);
 
 		// Check right
 		if (board.isOpen(x + 1, y)) {
@@ -112,17 +115,28 @@ public class CircuitTracer {
 		while (!stateStore.isEmpty()) {
 			TraceState currentState = stateStore.retrieve();
 
+			// if bestPaths is empty or the TraceState object's path is equal in length to
+			// one of the TraceStates in bestPaths,
+			// add it to bestPaths
+			// else if that TraceState object's path is shorter than the paths in bestPaths,
+			// clear bestPaths and add the current TraceState as the new shortest path
 			if (currentState.isSolution()) {
-				// The first found scenario
+				// The first found scenario, meaning bestPaths is empty, or similar length paths
+				// are found
 				if (bestPaths.isEmpty() || currentState.pathLength() == bestPaths.get(0).pathLength()) {
 					bestPaths.add(currentState);
+
+					// If a shorter path is found, clear bestPaths and add the new shortest path
 				} else if (currentState.pathLength() < bestPaths.get(0).pathLength()) {
 					bestPaths.clear();
 					bestPaths.add(currentState);
 				}
 			}
 
+			// else generate all valid next TraceState objects from the current TraceState
+			// and add them to stateStore
 			else {
+				// Get the current position of x and y
 				x = currentState.getRow();
 				y = currentState.getCol();
 
@@ -154,5 +168,4 @@ public class CircuitTracer {
 				return;
 		}
 	}
-
 } // class CircuitTracer
