@@ -27,7 +27,6 @@ public class CircuitTracer {
 	/** Print instructions for running CircuitTracer from the command line. */
 	private void printUsage() {
 		System.out.println("Usage: java CircuitTracer -s|-q -c|-g filename");
-		System.out.println("  -s for stack or -q for queue. -c for console or -g for GUI.");
 	}
 
 	/**
@@ -162,8 +161,10 @@ public class CircuitTracer {
 				for (TraceState path : bestPaths) {
 					System.out.println(path.getBoard().toString());
 				}
+				break;
 			case "-g":
 				System.out.println("GUI mode is not supported. I'm not doing this shit for 10 points");
+				break;
 			default:
 				printUsage();
 				return;
