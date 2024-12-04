@@ -37,7 +37,6 @@ public class CircuitTracer {
 	 */
 	public CircuitTracer(String[] args) {
 		// TODO: parse and validate command line args - first validation provided
-		ArrayList<TraceState> bestPaths = new ArrayList<TraceState>();
 		CircuitBoard board = null;
 
 		if (args.length != 3) {
@@ -55,7 +54,9 @@ public class CircuitTracer {
 		}
 
 		// TODO: initialize the Storage to use either a stack or queue
-		Storage<TraceState> stateStore = null;
+		// Intialize an empty Storage object that stores objects of type TraceState
+		Storage<TraceState> stateStore;
+
 		switch (args[0]) {
 			case "-s":
 				stateStore = Storage.getStackInstance();
@@ -74,14 +75,19 @@ public class CircuitTracer {
 		} catch (FileNotFoundException e) {
 			System.out.println("File was not found.");
 			return;
-		} catch (InvalidFileFormatException e) {
-			System.out.println("Invalid file format.");
-			return;
 		}
 
 		// TODO: run the search for best paths
+		// Initalize an empty list that stores objects of type TraceState
+		ArrayList<TraceState> bestPaths = new ArrayList<TraceState>();
+
+		// Add a new initial TraceState object (a path with one trace) 
+		// to stateStore for each open position adjacent to the starting component
 		int x = board.getStartingPoint().x;
 		int y = board.getStartingPoint().y;
+
+		TraceState initialState = new TraceState(board, x, y);
+		stateStore.store(initialState);
 
 		// Check right
 		if (board.isOpen(x + 1, y)) {
