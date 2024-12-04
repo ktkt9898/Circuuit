@@ -94,7 +94,7 @@ public class CircuitBoard {
 			String line = fileScan.nextLine();
 			Scanner lineScanner = new Scanner(line);
 			// Advance to the next line
-			// j columns
+			// k columns
 			for (int k = 0; k < COLS; k++) {
 				if (!lineScanner.hasNext()) {
 					lineScanner.close();
