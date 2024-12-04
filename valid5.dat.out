@@ -1,6 +1,0 @@
-O 1 2 
-O T T 
-O O O 
-
-Im not doing this shit
-Usage: java CircuitTracer -s|-q -c|-g filename

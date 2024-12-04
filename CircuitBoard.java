@@ -74,7 +74,7 @@ public class CircuitBoard {
 		else {
 			firstLineScan.close();
 			fileScan.close();
-			throw new InvalidFileFormatException(filename + "second value is not an integer.");
+			throw new InvalidFileFormatException(filename + " second value is not an integer.");
 		}
 		board = new char[ROWS][COLS];
 
@@ -117,7 +117,7 @@ public class CircuitBoard {
 						if (startingPoint != null) {
 							fileScan.close();
 							lineScanner.close();
-							throw new InvalidFileFormatException(filename + "contains more than one start point.");
+							throw new InvalidFileFormatException(filename + " contains more than one start point.");
 						}
 						startingPoint = new Point(i, k);
 						oneCount++;
@@ -125,7 +125,7 @@ public class CircuitBoard {
 						if (endingPoint != null) {
 							fileScan.close();
 							lineScanner.close();
-							throw new InvalidFileFormatException(filename + "contains more than one end point.");
+							throw new InvalidFileFormatException(filename + " contains more than one end point.");
 						}
 						endingPoint = new Point(i, k);
 						twoCount++;
@@ -134,7 +134,7 @@ public class CircuitBoard {
 					if (ALLOWED_CHARS.indexOf(colVal) == -1) {
 						fileScan.close();
 						lineScanner.close();
-						throw new InvalidFileFormatException(filename + "contains invalid characters.");
+						throw new InvalidFileFormatException(filename + " contains invalid characters.");
 
 					} else {
 						// Retrieve the value at the column
@@ -147,8 +147,7 @@ public class CircuitBoard {
 			if (lineScanner.hasNext()) {
 				lineScanner.close();
 				fileScan.close();
-				throw new InvalidFileFormatException(
-						String.format("%s: row %d contains more than %d columns.", filename, i, COLS));
+				throw new InvalidFileFormatException(filename + " contains more than " + COLS + " columns.");
 			}
 			// Close the inner for loop scanner
 			lineScanner.close();
@@ -156,11 +155,11 @@ public class CircuitBoard {
 		// If no start or end point, throw an exception
 		if (oneCount == 0 || twoCount == 0) {
 			fileScan.close();
-			throw new InvalidFileFormatException(filename + "does not contain a start or end point");
+			throw new InvalidFileFormatException(filename + " does not contain a start or end point.");
 		}
 		if (fileScan.hasNext()) {
 			fileScan.close();
-			throw new InvalidFileFormatException(filename + "contains more than " + ROWS + " rows.");
+			throw new InvalidFileFormatException(filename + " contains more than " + ROWS + " rows.");
 		}
 		fileScan.close();
 	}
