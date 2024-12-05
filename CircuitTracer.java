@@ -26,7 +26,7 @@ public class CircuitTracer {
 
 	/** Print instructions for running CircuitTracer from the command line. */
 	private void printUsage() {
-		System.out.println("Usage: java CircuitTracer -s|-q -c|-g filename");
+		System.out.println("Usage: java CircuitTracer -s|-q -c|-g filename \n -s for stack or -q for queue \n -c for console or -g for GUI");
 	}
 
 	/**
@@ -73,10 +73,10 @@ public class CircuitTracer {
 		try {
 			board = new CircuitBoard(args[2]);
 		} catch (FileNotFoundException e) {
-			System.out.println(e + "File was not found.");
+			System.out.println(e + " File was not found.");
 			return;
 		} catch (InvalidFileFormatException e) {
-			System.out.println(e + "File is not in the correct format.");
+			System.out.println(e + " File is not in the correct format.");
 			return;
 		}
 

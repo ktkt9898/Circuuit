@@ -1,0 +1,3 @@
+Usage: java CircuitTracer -s|-q -c|-g filename 
+ -s for stack or -q for queue 
+ -c for console or -g for GUI
