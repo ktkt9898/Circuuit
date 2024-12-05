@@ -54,11 +54,7 @@
  This order reflects the initial loop which would utilize a while loop (since the size would not be known if gathering row and columns from a file initially) and have to conditionally check for an open spot (O) or invalid spot (X). Using a loop requires an unknown "n" size growth factor.
 
 # OVERVIEW:
-
- Concisely explain what the program does. If this exceeds a couple
- of sentences, you're going too far. The details go in other
- sections.
-
+ This program takes in a grid and examines if it is valid, meaning it has one start and one end, and only O's and X's. If validated, it will trace the most optimal path or paths and output it to the console.
 
 # INCLUDED FILES:
 
@@ -66,33 +62,33 @@
  explanation of why each is included.
 
  e.g.
- * Class1.java - source file
- * Class2.java - source file
- * README - this file
-
+ * CircuitBoard.java - source file
+ * CircuitTracer.java - source file
+ * Storage.java - source file
+ * TraceState.java - source file
+ * InvalidFileFormatException.java - Exception class and source file
+ * OccupiedPositionException.java - Exception class and source file
+ * README - this file and instruction file
 
 # COMPILING AND RUNNING:
-
- Give the command for compiling the program, the command
- for running the program, and any usage instructions the
- user needs.
- 
- These are command-line instructions for a system like onyx.
- They have nothing to do with Eclipse or any other IDE. They
- must be specific - assume the user has Java installed, but
- has no idea how to compile or run a Java program from the
- command-line.
- 
- e.g.
  From the directory containing all source files, compile the
- driver class (and all dependencies) with the command:
- $ javac Class1.java
+ driver class, the CircuitTracer.java file, (and all dependencies) with the command:
+ $ javac CircuitTracer.java
 
  Run the compiled class file with the command:
- $ java Class1
+ $ java CircuitTracer -s|-q -c|-g filename
+
+ Where -s OR -q represent the choice of a *stack* or a *queue*
+ Where -c OR -g represent the choice of a *console* or *GUI* output
+ * Note that GUI implementation will not be provided on this version.
+
+ And where filename is the exact valid file's name and extension.
+ * A valid file is where the first line contains exactly two integers, 
+ and the remaining lines have exactly one "1" character, exactly one "2"
+ character, and only "O" and "X" on the remaining lines.
 
  Console output will give the results after the program finishes.
-
+ * As stated, GUI functionality does not work in this version.
 
 # PROGRAM DESIGN AND IMPORTANT CONCEPTS:
 
@@ -115,13 +111,42 @@
  how they work together, why did you design the program this way? What, if 
  anything, could be improved?
 
-# TESTING:
+ 1. This first main concept to understand is the CircuitBoard class.
+ This ensures validation that a file is indeed valid, as in it has:
+ - Exactly two integers on the first line, which represent the row and columns in existence
+ The remaining lines follow these conditions:
+ - Exactly one start point, which is represented as "1" in the file
+ - Exactly one end point, which is represented as "2" in the file
+ - Only "O", "X", and eventually when traced, "T" allowed characters in the file
 
+ If any of these conditions are invalid, an appropriate exception message will prompt the user,
+ such as more columns existing that are retrieved from the first line.
+
+ However, if the file is validated, as in no exceptions are thrown, a starting point and end point will be identified
+ and the CircuitTracer will take in the now validated CircuitBoard object to be traced.
+
+ 2. The CircuitTracer class traces the most optimal circuit for a validated file.
+ - The circuit will first start wherever the "1" is located, the starting point and check valid open moves, 
+ represented by "O", in the left, right, up, and down directions (no diagonal).
+ - An "X" in a circuit represents an invalid move, meaning if a movement attempts to 
+ A circut path is considered optimal when the next adjacent move is the "2", which represents the end point.
+ - The most optimal paths will then be output to the console or GUI, along with its path traced with "T" characters.
+ * Note that this version does not have GUI functionality
+
+ 3. The CircuitTracer optimal paths can be organized as a stack or a queue.
+ - If the user chose "-s" from the usage message, the optimal paths will be stacked upon each other and then
+ retrieved as a LIFO structure to the or GUI.
+ This means the last found optimal path will be the first printed to the console or GUI.
+ - If the user chose "-q" from the usage message, the optimal paths will be inserted in a line organization, and then retrieved
+ as a FIFO structure to the console or GUI.
+ This means that the first found optimal found path will be the first printed to the console or GUI.
+ * Note that this version does not have GUI functionality
+
+# TESTING:
  How did you test your program to be sure it works and meets all of the
  requirements? What was the testing strategy? What kinds of tests were run?
  Can your program handle bad input? Is your program  idiot-proof? How do you 
  know? What are the known issues / bugs remaining in your program?
-
 
 # DISCUSSION:
  Discuss the issues you encountered during programming (development)
