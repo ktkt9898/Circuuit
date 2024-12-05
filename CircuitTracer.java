@@ -1,4 +1,3 @@
-import java.awt.Point;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
@@ -9,6 +8,7 @@ import java.util.ArrayList;
  * a GUI according to options specified via command-line arguments.
  * 
  * @author mvail
+ * @author Kyle Truschel
  */
 public class CircuitTracer {
 
@@ -26,7 +26,8 @@ public class CircuitTracer {
 
 	/** Print instructions for running CircuitTracer from the command line. */
 	private void printUsage() {
-		System.out.println("Usage: java CircuitTracer -s|-q -c|-g filename \n -s for stack or -q for queue \n -c for console or -g for GUI");
+		System.out.println(
+				"Usage: java CircuitTracer -s|-q -c|-g filename \n -s for stack or -q for queue \n -c for console or -g for GUI");
 	}
 
 	/**
@@ -36,7 +37,7 @@ public class CircuitTracer {
 	 * @param args command line arguments passed through from main()
 	 */
 	public CircuitTracer(String[] args) {
-		// TODO: parse and validate command line args - first validation provided
+		// Parse and validate command line args - first validation provided
 		CircuitBoard board = null;
 
 		if (args.length != 3) {
@@ -53,7 +54,7 @@ public class CircuitTracer {
 			return;
 		}
 
-		// TODO: initialize the Storage to use either a stack or queue
+		// Initialize the Storage to use either a stack or queue
 		// Intialize an empty Storage object that stores objects of type TraceState
 		Storage<TraceState> stateStore = null;
 
@@ -69,7 +70,7 @@ public class CircuitTracer {
 				return;
 		}
 
-		// TODO: read in the CircuitBoard from the given file
+		// Read in the CircuitBoard from the given file
 		try {
 			board = new CircuitBoard(args[2]);
 		} catch (FileNotFoundException e) {
@@ -80,7 +81,7 @@ public class CircuitTracer {
 			return;
 		}
 
-		// TODO: run the search for best paths
+		// Run the search for best paths
 		// Initalize an empty list that stores objects of type TraceState
 		ArrayList<TraceState> bestPaths = new ArrayList<TraceState>();
 
@@ -88,9 +89,6 @@ public class CircuitTracer {
 		// to stateStore for each open position adjacent to the starting component
 		int x = board.getStartingPoint().x;
 		int y = board.getStartingPoint().y;
-
-		// TraceState initialState = new TraceState(board, x, y);
-		// stateStore.store(initialState);
 
 		// Check right
 		if (board.isOpen(x + 1, y)) {
@@ -155,15 +153,16 @@ public class CircuitTracer {
 			}
 		}
 
-		// TODO: output results to console or GUI, according to specified choice
+		// Output results to console or GUI, according to specified choice
 		switch (args[1]) {
 			case "-c":
 				for (TraceState path : bestPaths) {
 					System.out.println(path.getBoard().toString());
 				}
 				break;
+			// not for 10 points
 			case "-g":
-				System.out.println("GUI mode is not supported. I'm not doing this shit for 10 points");
+				System.out.println("GUI mode is not supported in this version.");
 				break;
 			default:
 				printUsage();

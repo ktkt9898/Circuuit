@@ -9,6 +9,20 @@
             "name": "CircuitTracer",
             "request": "launch",
             "mainClass": "CircuitTracer",
+            "projectName": "Circuuit-2_18e8e2bd"
+        },
+        {
+            "type": "java",
+            "name": "CircuitTracerTester",
+            "request": "launch",
+            "mainClass": "CircuitTracerTester",
+            "projectName": "Circuuit-2_18e8e2bd"
+        },
+        {
+            "type": "java",
+            "name": "CircuitTracer",
+            "request": "launch",
+            "mainClass": "CircuitTracer",
             "projectName": "Circuuit_c13a3bb2"
         },
         {

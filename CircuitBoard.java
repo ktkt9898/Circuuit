@@ -7,6 +7,7 @@ import java.util.Scanner;
  * Represents a 2D circuit board as read from an input file.
  * 
  * @author mvail
+ * @author Kyle Truschel
  */
 public class CircuitBoard {
 	/** current contents of the board */
@@ -44,7 +45,7 @@ public class CircuitBoard {
 	 * @throws InvalidFileFormatException for any file formatting or content issue
 	 */
 	public CircuitBoard(String filename) throws FileNotFoundException {
-		// TODO: parse the given file to populate the char[][]
+		// Parse the given file to populate the char[][]
 		// throw FileNotFoundException if Scanner cannot read the file
 		// throw InvalidFileFormatException if any issues are encountered while parsing
 		// the file
@@ -78,6 +79,7 @@ public class CircuitBoard {
 		}
 		board = new char[ROWS][COLS];
 
+		// Initialize a count, which will be later used in a conditional check if no start or end is found
 		int oneCount = 0;
 		int twoCount = 0;
 
@@ -96,6 +98,7 @@ public class CircuitBoard {
 			// Advance to the next line
 			// k columns
 			for (int k = 0; k < COLS; k++) {
+				// If less columns than expected, throw an exception
 				if (!lineScanner.hasNext()) {
 					lineScanner.close();
 					fileScan.close();
@@ -105,6 +108,8 @@ public class CircuitBoard {
 
 				String columnValue = lineScanner.next();
 				{
+					// If the expected "O"s, "X"s, "1"s, "2"s are combined as a string, meaning not
+					// exactly one length, throw an exception
 					if (columnValue.length() != 1) {
 						lineScanner.close();
 						fileScan.close();
@@ -112,7 +117,10 @@ public class CircuitBoard {
 								.format("%s: row %d column %d contains more than one character.", filename, i, k));
 					}
 
+					// The input file is read as a string, so we need to convert it to a char
 					char colVal = columnValue.charAt(0);
+					// Find the first instance of a 1, which represents the starting point
+					// If more than one starting point is found, throw an exception
 					if (colVal == START) {
 						if (startingPoint != null) {
 							fileScan.close();
@@ -120,7 +128,10 @@ public class CircuitBoard {
 							throw new InvalidFileFormatException(filename + " contains more than one start point.");
 						}
 						startingPoint = new Point(i, k);
+						// Keep track of how many 1's are in the file
 						oneCount++;
+					// Find the first instance of a two, which represents the ending point
+					// If more than one ending point is found, throw an exception
 					} else if (colVal == END) {
 						if (endingPoint != null) {
 							fileScan.close();
@@ -128,6 +139,7 @@ public class CircuitBoard {
 							throw new InvalidFileFormatException(filename + " contains more than one end point.");
 						}
 						endingPoint = new Point(i, k);
+						// Keep track of how many 1's are in the file
 						twoCount++;
 					}
 
@@ -154,13 +166,17 @@ public class CircuitBoard {
 		}
 		// If no start or end point, throw an exception
 		if (oneCount == 0 || twoCount == 0) {
+			firstLineScan.close();
 			fileScan.close();
 			throw new InvalidFileFormatException(filename + " does not contain a start or end point.");
 		}
+		// If more rows exist than provided, throw an exception
 		if (fileScan.hasNext()) {
+			firstLineScan.close();
 			fileScan.close();
 			throw new InvalidFileFormatException(filename + " contains more than " + ROWS + " rows.");
 		}
+		firstLineScan.close();
 		fileScan.close();
 	}
 
