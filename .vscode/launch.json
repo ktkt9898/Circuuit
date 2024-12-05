@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CircuitTracer",
+            "request": "launch",
+            "mainClass": "CircuitTracer",
+            "projectName": "Circuuit_c13a3bb2"
+        },
+        {
+            "type": "java",
+            "name": "CircuitTracerTester",
+            "request": "launch",
+            "mainClass": "CircuitTracerTester",
+            "projectName": "Circuuit_c13a3bb2"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}",
